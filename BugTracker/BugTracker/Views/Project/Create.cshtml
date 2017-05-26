@@ -1,18 +1,17 @@
-﻿@model BugTracker.Models.ViewModels.ProjectCreateModel
+﻿@model BugTracker.Models.ProjectCreateModel
 
 @{
-    ViewBag.Title = "Create Project";
+    ViewBag.Title = "Create";
 }
 
-<h2>Create Project</h2>
-
+<h2>Create</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Project</h4>
+        <h4>ProjectCreateModel</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -41,9 +40,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Manager, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(model => model.Manager, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Manager", ViewBag.Roles as SelectList)
+                @Html.EditorFor(model => model.Manager)
+                @Html.ValidationMessageFor(model => model.Manager)
             </div>
         </div>
 
@@ -58,7 +58,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

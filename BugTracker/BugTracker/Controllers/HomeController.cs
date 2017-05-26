@@ -14,20 +14,7 @@ namespace BugTracker.Controllers
            
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+  
 
         [Authorize(Roles = "admin")]
         public ActionResult Users()
@@ -36,7 +23,6 @@ namespace BugTracker.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 users = db.Users.ToList();
-                
             }
 
             return View(users);
