@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BugTracker.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +9,13 @@ namespace BugTracker.Controllers
 {
     public class ProjectController : Controller
     {
+
+        ApplicationDbContext db = new ApplicationDbContext();
         //
         // GET: /Project/
         public ActionResult Index()
         {
-            return View();
+            return View(db.Projects);
         }
 
         //
@@ -26,23 +29,56 @@ namespace BugTracker.Controllers
         // GET: /Project/Create
         public ActionResult Create()
         {
-            return View();
+           List<User> managers =UsersList.getUsersByRole("manager");
+           if (managers.Count != 0)
+           {
+               ProjectCreateModel model = new ProjectCreateModel
+               {
+                   ManagerId = managers.FirstOrDefault().Id,
+                   Managers = new SelectList(managers)
+               };
+               return View(model);
+           }
+           else
+           {
+               ViewData["Message"] = "В системе нет пользователей с ролью 'Менеджер'";
+              
+           }
+           return View(new ProjectCreateModel());
+           
         }
 
         //
         // POST: /Project/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProjectCreateModel model)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Project project = new Project
+                    {
+                        Id = model.Id,
+                        Title = model.Title,
+                        Description = model.Description,
+                        Customer = model.Customer,
+                        ManagerId = model.ManagerId,
+                        Manager = db.Users.Find(model.ManagerId)
+                    };
+                    db.Projects.Add(project);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewData["Message"] = "Заполните все поля";
+                    return View(model);
+                }
             }
             catch
             {
-                return View();
+                return HttpNotFound();
             }
         }
 

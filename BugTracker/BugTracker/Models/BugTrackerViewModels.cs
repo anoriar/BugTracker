@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BugTracker.Models
 {
@@ -33,7 +34,7 @@ namespace BugTracker.Models
 
     public class IssueViewModel
     {
-         [Key]
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Title")]
@@ -81,13 +82,20 @@ namespace BugTracker.Models
         [Display(Name = "Customer")]
         public string Customer { get; set; }
 
-        public int Manager { get; set; }
+        public string ManagerId { get; set; }
 
+        [Required]
+        public SelectList Managers { get; set; }
+
+        public ProjectCreateModel()
+        {
+            Managers = new SelectList(new List<User>());
+        }
     }
 
-    public class ProjectViewModel
+    public class ProjectDetailModel
     {
-         [Key]
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Title")]
@@ -106,7 +114,7 @@ namespace BugTracker.Models
 
         public List<Issue> Issues { get; set; }
 
-        public ProjectViewModel()
+        public ProjectDetailModel()
         {
             Issues = new List<Issue>();
         }

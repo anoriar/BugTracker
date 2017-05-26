@@ -9,7 +9,8 @@ namespace BugTracker.Models
 {
     public class UsersList
     {
-        public static List<string> getUsersByRole(string roleStr){
+        public static List<User> getUsersByRole(string roleStr)
+        {
             ApplicationDbContext db = new ApplicationDbContext();
             List<string> usersNames = new List<string>();
             List<User> users = new List<User>();
@@ -24,7 +25,7 @@ namespace BugTracker.Models
                     usersNames.Add(user.UserName);
                 }
             }
-            return usersNames;
+            return users;
         }
     }
 
