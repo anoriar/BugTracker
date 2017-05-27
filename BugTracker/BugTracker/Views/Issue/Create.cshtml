@@ -15,13 +15,21 @@
         <hr />
         @Html.ValidationSummary(true)
 
+        <div class="form-group">
 
+            @Html.HiddenFor(model => model.Id)
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Title)
                 @Html.ValidationMessageFor(model => model.Title)
             </div>
+        </div>
+
+        <div class="form-group">
+
+                @Html.HiddenFor(model => model.ProjectId)
         </div>
 
         <div class="form-group">
@@ -43,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DeveloperId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DeveloperId, Model.Developers, "- Please select a manager -", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.DeveloperId, Model.Developers, "- Please select a developer -", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DeveloperId)
             </div>
         </div>

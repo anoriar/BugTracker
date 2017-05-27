@@ -273,3 +273,4 @@ E:\Web\BugTracker\BugTracker\BugTracker\bin\Microsoft.Owin.Security.Twitter.xml
 E:\Web\BugTracker\BugTracker\BugTracker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\Web\BugTracker\BugTracker\BugTracker\obj\Debug\BugTracker.Migrations.MigrateDB.resources
 E:\Web\BugTracker\BugTracker\BugTracker\obj\Debug\BugTracker.csproj.GenerateResource.Cache
+E:\Web\BugTracker\BugTracker\BugTracker\obj\Debug\BugTracker.Migrations.MigrateDB1.resources

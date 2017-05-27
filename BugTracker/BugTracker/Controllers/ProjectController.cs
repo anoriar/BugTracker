@@ -59,6 +59,7 @@ namespace BugTracker.Controllers
             var managers = UsersList.getUsersByRole("manager");
             ProjectCreateModel model = new ProjectCreateModel
             {
+                
                 Managers = managers
             };
             return View(model);
@@ -75,6 +76,7 @@ namespace BugTracker.Controllers
             if (ModelState.IsValid)
             {
                 var manager = db.Users.Find(model.ManagerId);
+          
                 Project project = new Project
                 {
                     Id = model.Id,
@@ -86,7 +88,7 @@ namespace BugTracker.Controllers
                 };
                 db.Projects.Add(project);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = project.Id });
             }
             
             return View(model);

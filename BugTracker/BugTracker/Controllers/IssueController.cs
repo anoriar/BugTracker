@@ -48,7 +48,7 @@ namespace BugTracker.Controllers
                 EnabledStatuses = GetSelectListItems(enabledStatuses)
             };
 
-            return View(issue);
+            return View(model);
         }
 
         // GET: /Issue/Create/projectid
@@ -75,12 +75,12 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IssueCreateModel model)
         {
-            var developers = UsersList.getUsersByRole("developer");
-            model.Developers = developers;
+            
             if (ModelState.IsValid)
             {
-                var developer = db.Users.Find(model.DeveloperId);
                 var project = db.Projects.Find(model.ProjectId);
+                var developer = db.Users.Find(model.DeveloperId);
+              
                 Issue issue = new Issue
                 {
                     Id = model.Id,
@@ -96,10 +96,11 @@ namespace BugTracker.Controllers
 
                 db.Issues.Add(issue);
                 db.SaveChanges();
-                return RedirectToAction("Details");
+                return RedirectToAction("Details", new { id = issue.Id });
             }
+            var developers = UsersList.getUsersByRole("developer");
+            model.Developers = developers;
 
-           
             return View(model);
         }
 
