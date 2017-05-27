@@ -100,19 +100,13 @@ namespace BugTracker.Models
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-
         [Display(Name = "Customer")]
         public string Customer { get; set; }
 
-        [Display(Name = "Manager")]
-        public string Manager { get; set; }
+        [Display(Name = "ManagerName")]
+        public string ManagerName { get; set; }
 
+        [Display(Name = "Issues")]
         public List<Issue> Issues { get; set; }
-
-        public ProjectDetailModel()
-        {
-            Issues = new List<Issue>();
-        }
-
     }
 }

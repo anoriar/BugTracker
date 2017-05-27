@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Net;
 
 
 namespace BugTracker.Controllers
@@ -17,15 +18,40 @@ namespace BugTracker.Controllers
         // GET: /Project/
         public ActionResult Index()
         {
+
             var projects = db.Projects.Include(p => p.Manager);
             return View(projects);
         }
 
         //
         // GET: /Project/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Project project = db.Projects.Find(id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = new ProjectDetailModel
+            {
+                Id = project.Id,
+                Title = project.Title,
+                Description = project.Description,
+                Customer = project.Customer,
+                ManagerName = db.Users.Find(project.ManagerId).UserName,
+                Issues = project.Issues.ToList()
+
+            };
+
+            model.Issues = project.Issues.ToList();
+
+            return View(model);
         }
 
         //
