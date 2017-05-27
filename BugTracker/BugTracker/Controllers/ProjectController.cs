@@ -17,7 +17,7 @@ namespace BugTracker.Controllers
         // GET: /Project/
         public ActionResult Index()
         {
-            var projects = db.Projects.Include(p => p.User);
+            var projects = db.Projects.Include(p => p.Manager);
             return View(projects);
         }
 
@@ -57,8 +57,8 @@ namespace BugTracker.Controllers
                     Title = model.Title,
                     Description = model.Description,
                     Customer = model.Customer,
-                    UserId = manager.Id,
-                    User = manager
+                    ManagerId = manager.Id,
+                    Manager = manager
                 };
                 db.Projects.Add(project);
                 db.SaveChanges();

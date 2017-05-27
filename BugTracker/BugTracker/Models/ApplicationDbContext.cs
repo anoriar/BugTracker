@@ -40,10 +40,10 @@ namespace BugTracker.Models
 
         public string Customer { get; set; }
 
-        [ForeignKey("User")]
-        public string UserId { get; set; }
+        [ForeignKey("Manager")]
+        public string ManagerId { get; set; }
         
-        public User User { get; set; }
+        public User Manager { get; set; }
 
         public virtual List<Issue> Issues { get; set; }
 
