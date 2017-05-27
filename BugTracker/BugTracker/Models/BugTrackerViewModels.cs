@@ -85,6 +85,7 @@ namespace BugTracker.Models
         public string ManagerId { get; set; }
 
         [Required]
+        [Display(Name = "Managers")]
         public SelectList Managers { get; set; }
 
         public ProjectCreateModel()

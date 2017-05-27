@@ -53,33 +53,29 @@ namespace BugTracker.Controllers
         [HttpPost]
         public ActionResult Create(ProjectCreateModel model)
         {
-            try
+
+            if (model.Managers.Count() == 0)
             {
-                if (ModelState.IsValid)
-                {
-                    Project project = new Project
-                    {
-                        Id = model.Id,
-                        Title = model.Title,
-                        Description = model.Description,
-                        Customer = model.Customer,
-                        ManagerId = model.ManagerId,
-                        Manager = db.Users.Find(model.ManagerId)
-                    };
-                    db.Projects.Add(project);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewData["Message"] = "Заполните все поля";
-                    return View(model);
-                }
+                ModelState.AddModelError("Managers", "Менеджер не выбран");
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
+                Project project = new Project
+                {
+                    Id = model.Id,
+                    Title = model.Title,
+                    Description = model.Description,
+                    Customer = model.Customer,
+                    ManagerId = model.ManagerId,
+                    Manager = db.Users.Find(model.ManagerId)
+                };
+                db.Projects.Add(project);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
+            
+            return View(model);
+      
         }
 
         //
