@@ -25,6 +25,7 @@ namespace BugTracker.Models
 
         public System.Data.Entity.DbSet<BugTracker.Models.Issue> Issues { get; set; }
         public System.Data.Entity.DbSet<BugTracker.Models.Project> Projects { get; set; }
+
     }
 
     public class Project
@@ -65,13 +66,13 @@ namespace BugTracker.Models
 
         public IssueStatuses Status { get; set; }
 
-        [ForeignKey("User")]
-        public string UserId { get; set; }
+        [ForeignKey("Developer")]
+        public string DeveloperId { get; set; }
 
-        public User User { get; set; }
+        public User Developer { get; set; }
 
         [ForeignKey("Project")]
-        public int? ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
         public Project Project { get; set; }
 

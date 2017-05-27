@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+
 
 namespace BugTracker.Models
 {
     public class UsersList
     {
-        public static List<User> getUsersByRole(string roleStr)
+        public static IEnumerable<SelectListItem> getUsersByRole(string roleStr)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             List<string> usersNames = new List<string>();
@@ -25,7 +27,23 @@ namespace BugTracker.Models
                     usersNames.Add(user.UserName);
                 }
             }
-            return users;
+            return GetSelectListItems(users);
+        }
+
+        private static IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<User> elements)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element.Id,
+                    Text = element.UserName
+                });
+            }
+
+            return selectList;
         }
     }
 

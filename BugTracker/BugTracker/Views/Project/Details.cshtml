@@ -47,7 +47,7 @@
 
 <h2>Issues</h2>
 
-@using (Html.BeginForm("Details", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "Issue", new { id = Model.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -109,7 +109,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
+                @Html.DisplayFor(modelItem => item.Developer.UserName)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details/" + item.Id, "Issue")

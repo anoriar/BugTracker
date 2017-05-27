@@ -32,6 +32,7 @@ namespace BugTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Project project = db.Projects.Find(id);
             if (project == null)
             {
@@ -46,10 +47,7 @@ namespace BugTracker.Controllers
                 Customer = project.Customer,
                 ManagerName = db.Users.Find(project.ManagerId).UserName,
                 Issues = project.Issues.ToList()
-
             };
-
-            model.Issues = project.Issues.ToList();
 
             return View(model);
         }
@@ -58,10 +56,10 @@ namespace BugTracker.Controllers
         // GET: /Project/Create
         public ActionResult Create()
         {
-            List<User> managers = UsersList.getUsersByRole("manager");
+            var managers = UsersList.getUsersByRole("manager");
             ProjectCreateModel model = new ProjectCreateModel
             {
-                Managers = GetSelectListItems(managers)
+                Managers = managers
             };
             return View(model);
         }
@@ -71,12 +69,12 @@ namespace BugTracker.Controllers
         [HttpPost]
         public ActionResult Create(ProjectCreateModel model)
         {
-            List<User> managers = UsersList.getUsersByRole("manager");
-            model.Managers = GetSelectListItems(managers);
+            var managers = UsersList.getUsersByRole("manager");
+            model.Managers = managers;
            
             if (ModelState.IsValid)
             {
-                var manager = db.Users.Find(model.ManagerId);        
+                var manager = db.Users.Find(model.ManagerId);
                 Project project = new Project
                 {
                     Id = model.Id,
@@ -116,22 +114,6 @@ namespace BugTracker.Controllers
             {
                 return View();
             }
-        }
-
-        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<User> elements)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var element in elements)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = element.Id,
-                    Text = element.UserName
-                });
-            }
-
-            return selectList;
         }
 
     }

@@ -12,6 +12,8 @@ namespace BugTracker.Models
         [Key]
         public int Id { get; set; }
 
+        public int ProjectId { get; set; }
+
         [Required]
         [Display(Name = "Title")]
         public string Title { get; set; }
@@ -21,17 +23,18 @@ namespace BugTracker.Models
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "User")]
-        public List<string> User { get; set; }
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
 
         [Required]
-        [Display(Name = "Price")]
-        public string Price { get; set; }
+        [Display(Name = "Developer")]
+        public string DeveloperId { get; set; }
 
-        public int ProjectId { get; set; }
+        public IEnumerable<SelectListItem> Developers { get; set; } 
+
     }
 
-    public class IssueViewModel
+    public class IssueDetailModel
     {
         [Key]
         public int Id { get; set; }
@@ -44,24 +47,20 @@ namespace BugTracker.Models
         public string Description { get; set; }
 
 
-        [Display(Name = "Users")]
-        public List<string> Users { get; set; }
+        [Display(Name = "Developer")]
+        public string Developer { get; set; }
 
         [Display(Name = "Status")]
         public string Status { get; set; }
 
 
         [Display(Name = "Price")]
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
         public int ProjectId { get; set; }
 
-        List<IssueStatuses> EnabledStatuses { get; set; }
+        public IEnumerable<SelectListItem> EnabledStatuses { get; set; } 
 
-        public IssueViewModel()
-        {
-            EnabledStatuses = new List<IssueStatuses>();
-        }
     }
 
     public class ProjectCreateModel
@@ -95,7 +94,6 @@ namespace BugTracker.Models
 
         [Display(Name = "Title")]
         public string Title { get; set; }
-
 
         [Display(Name = "Description")]
         public string Description { get; set; }

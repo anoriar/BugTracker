@@ -8,36 +8,35 @@ namespace BugTracker.Models
 {
     public class EnabledStatuses
     {
-        public static List<string> getEnabledIssueStatuses(string status)
+        public static List<IssueStatuses> getEnabledIssueStatuses(IssueStatuses status)
         {
        
-            List<string> enabledStatuses = new List<string>();
-            if (status == "Open")
+            List<IssueStatuses> enabledStatuses = new List<IssueStatuses>();
+            if (status == IssueStatuses.Open)
             {
-                enabledStatuses.Add(IssueStatuses.Open.ToString());
-                enabledStatuses.Add(IssueStatuses.CodeReview.ToString());
-                enabledStatuses.Add(IssueStatuses.Closed.ToString());
+                enabledStatuses.Add(IssueStatuses.Open);
+                enabledStatuses.Add(IssueStatuses.CodeReview);
+                enabledStatuses.Add(IssueStatuses.Closed);
             }
 
-            if (status == "CodeReview")
+            if (status == IssueStatuses.CodeReview)
             {
-                enabledStatuses.Add(IssueStatuses.CodeReview.ToString());
-                enabledStatuses.Add(IssueStatuses.ReOpened.ToString());
-                enabledStatuses.Add(IssueStatuses.Closed.ToString());
+                enabledStatuses.Add(IssueStatuses.CodeReview);
+                enabledStatuses.Add(IssueStatuses.ReOpened);
+                enabledStatuses.Add(IssueStatuses.Closed);
             }
 
-            if (status == "ReOpened")
+            if (status == IssueStatuses.ReOpened)
             {
-                enabledStatuses.Add(IssueStatuses.ReOpened.ToString());
-                enabledStatuses.Add(IssueStatuses.CodeReview.ToString());
-                enabledStatuses.Add(IssueStatuses.Closed.ToString());
+                enabledStatuses.Add(IssueStatuses.ReOpened);
+                enabledStatuses.Add(IssueStatuses.CodeReview);
+                enabledStatuses.Add(IssueStatuses.Closed);
             }
 
-            if (status == "Closed")
+            if (status == IssueStatuses.Closed)
             {
-                enabledStatuses.Add(IssueStatuses.Closed.ToString());
-                enabledStatuses.Add(IssueStatuses.ReOpened.ToString());
-               
+                enabledStatuses.Add(IssueStatuses.Closed);
+                enabledStatuses.Add(IssueStatuses.ReOpened);
             }
           
             return enabledStatuses;

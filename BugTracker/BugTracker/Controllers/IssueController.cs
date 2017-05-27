@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using BugTracker.Models;
+using BugTracker.Models.Enums;
+
+namespace BugTracker.Controllers
+{
+    public class IssueController : Controller
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: /Issue/
+        public ActionResult Index()
+        {
+            var issues = db.Issues.Include(i => i.Project).Include(i => i.Status);
+            return View(issues.ToList());
+        }
+
+        // GET: /Issue/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Issue issue = db.Issues.Find(id);
+            if (issue == null)
+            {
+                return HttpNotFound();
+            }
+
+            var enabledStatuses = EnabledStatuses.getEnabledIssueStatuses(issue.Status);
+            var model = new IssueDetailModel
+            {
+                Id = issue.Id,
+                Title = issue.Title,
+                Description = issue.Description,
+                Developer = db.Users.Find(issue.DeveloperId).UserName,
+                Status = issue.Status.ToString(),
+                Price = issue.Price,
+                ProjectId = issue.ProjectId,
+                EnabledStatuses = GetSelectListItems(enabledStatuses)
+            };
+
+            return View(issue);
+        }
+
+        // GET: /Issue/Create/projectid
+        public ActionResult Create(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var developers = UsersList.getUsersByRole("developer");
+            var model = new IssueCreateModel()
+            {
+                ProjectId = (int)id,
+                Developers = developers
+            };
+           
+            return View(model);
+        }
+
+        // POST: /Issue/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IssueCreateModel model)
+        {
+            var developers = UsersList.getUsersByRole("developer");
+            model.Developers = developers;
+            if (ModelState.IsValid)
+            {
+                var developer = db.Users.Find(model.DeveloperId);
+                var project = db.Projects.Find(model.ProjectId);
+                Issue issue = new Issue
+                {
+                    Id = model.Id,
+                    Title = model.Title,
+                    Description = model.Description,
+                    Price = model.Price,
+                    Status = IssueStatuses.Open, 
+                    DeveloperId = developer.Id,
+                    Developer = developer,
+                    ProjectId = project.Id,
+                    Project = project
+                };
+
+                db.Issues.Add(issue);
+                db.SaveChanges();
+                return RedirectToAction("Details");
+            }
+
+           
+            return View(model);
+        }
+
+     
+
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<IssueStatuses> elements)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element.ToString(),
+                    Text = element.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
+
+    }
+}
