@@ -29,7 +29,6 @@ namespace BugTracker.Models
         public string Price { get; set; }
 
         public int ProjectId { get; set; }
-
     }
 
     public class IssueViewModel
@@ -82,16 +81,11 @@ namespace BugTracker.Models
         [Display(Name = "Customer")]
         public string Customer { get; set; }
 
+        [Required]
+        [Display(Name = "Manager")]
         public string ManagerId { get; set; }
 
-        [Required]
-        [Display(Name = "Managers")]
-        public SelectList Managers { get; set; }
-
-        public ProjectCreateModel()
-        {
-            Managers = new SelectList(new List<User>());
-        }
+        public IEnumerable<SelectListItem> Managers { get; set; } 
     }
 
     public class ProjectDetailModel

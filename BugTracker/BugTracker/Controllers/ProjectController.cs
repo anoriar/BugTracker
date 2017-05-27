@@ -29,23 +29,12 @@ namespace BugTracker.Controllers
         // GET: /Project/Create
         public ActionResult Create()
         {
-           List<User> managers =UsersList.getUsersByRole("manager");
-           if (managers.Count != 0)
-           {
-               ProjectCreateModel model = new ProjectCreateModel
-               {
-                   ManagerId = managers.FirstOrDefault().Id,
-                   Managers = new SelectList(managers)
-               };
-               return View(model);
-           }
-           else
-           {
-               ViewData["Message"] = "В системе нет пользователей с ролью 'Менеджер'";
-              
-           }
-           return View(new ProjectCreateModel());
-           
+            List<User> managers = UsersList.getUsersByRole("manager");
+            ProjectCreateModel model = new ProjectCreateModel
+            {
+                Managers = GetSelectListItems(managers)
+            };
+            return View(model);
         }
 
         //
@@ -53,21 +42,20 @@ namespace BugTracker.Controllers
         [HttpPost]
         public ActionResult Create(ProjectCreateModel model)
         {
-
-            if (model.Managers.Count() == 0)
-            {
-                ModelState.AddModelError("Managers", "Менеджер не выбран");
-            }
+            List<User> managers = UsersList.getUsersByRole("manager");
+            model.Managers = GetSelectListItems(managers);
+           
             if (ModelState.IsValid)
             {
+                var manager = db.Users.Find(model.ManagerId);        
                 Project project = new Project
                 {
                     Id = model.Id,
                     Title = model.Title,
                     Description = model.Description,
                     Customer = model.Customer,
-                    ManagerId = model.ManagerId,
-                    Manager = db.Users.Find(model.ManagerId)
+                    ManagerId = manager.Id,
+                    Manager = manager
                 };
                 db.Projects.Add(project);
                 db.SaveChanges();
@@ -75,7 +63,6 @@ namespace BugTracker.Controllers
             }
             
             return View(model);
-      
         }
 
         //
@@ -100,6 +87,22 @@ namespace BugTracker.Controllers
             {
                 return View();
             }
+        }
+
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<User> elements)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element.Id,
+                    Text = element.UserName
+                });
+            }
+
+            return selectList;
         }
 
     }
