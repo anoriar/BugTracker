@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BugTracker.Models
 {
     public class EnabledStatuses
     {
-        public static List<IssueStatuses> getEnabledIssueStatuses(IssueStatuses status)
+        public static IEnumerable<SelectListItem> getEnabledIssueStatuses(IssueStatuses status)
         {
        
             List<IssueStatuses> enabledStatuses = new List<IssueStatuses>();
@@ -38,8 +39,27 @@ namespace BugTracker.Models
                 enabledStatuses.Add(IssueStatuses.Closed);
                 enabledStatuses.Add(IssueStatuses.ReOpened);
             }
-          
-            return enabledStatuses;
+
+
+            return GetSelectListItems(enabledStatuses);
         }
+
+
+        private static IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<IssueStatuses> elements)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element.ToString(),
+                    Text = element.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
     }
 }

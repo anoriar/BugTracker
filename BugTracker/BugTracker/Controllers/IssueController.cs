@@ -15,13 +15,6 @@ namespace BugTracker.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: /Issue/
-        public ActionResult Index()
-        {
-            var issues = db.Issues.Include(i => i.Project).Include(i => i.Status);
-            return View(issues.ToList());
-        }
-
         // GET: /Issue/Details/5
         public ActionResult Details(int? id)
         {
@@ -45,10 +38,39 @@ namespace BugTracker.Controllers
                 Status = issue.Status.ToString(),
                 Price = issue.Price,
                 ProjectId = issue.ProjectId,
-                EnabledStatuses = GetSelectListItems(enabledStatuses)
+                EnabledStatuses = enabledStatuses
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Details")]
+        public ActionResult ChangeStatus(IssueDetailModel model)
+        {
+            Issue issue = db.Issues.Find(model.Id);
+           // var userName = issue.Developer.UserName;
+           // if (User.Identity.Name == userName || User.IsInRole("manager") || User.IsInRole("admin"))
+            //{
+                if (ModelState.IsValid)
+                {
+
+                    issue.Status = (IssueStatuses)Enum.Parse(typeof(IssueStatuses), model.Status);
+                    db.Entry(issue).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+           // }
+                model.Id = issue.Id;
+                model.Title = issue.Title;
+                model.Description = issue.Description;
+                model.Price = issue.Price;
+                model.ProjectId = issue.ProjectId;
+                model.Status = issue.Status.ToString();
+                model.Developer = db.Users.Find(issue.DeveloperId).UserName;
+                model.EnabledStatuses = EnabledStatuses.getEnabledIssueStatuses(issue.Status);
+
+                return View(model);
         }
 
         // GET: /Issue/Create/projectid
@@ -103,25 +125,6 @@ namespace BugTracker.Controllers
 
             return View(model);
         }
-
-     
-
-        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<IssueStatuses> elements)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var element in elements)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = element.ToString(),
-                    Text = element.ToString()
-                });
-            }
-
-            return selectList;
-        }
-
 
     }
 }

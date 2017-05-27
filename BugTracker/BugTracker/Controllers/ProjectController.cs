@@ -18,7 +18,6 @@ namespace BugTracker.Controllers
         // GET: /Project/
         public ActionResult Index()
         {
-
             var projects = db.Projects.Include(p => p.Manager);
             return View(projects);
         }
@@ -32,7 +31,7 @@ namespace BugTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+            var issues = db.Issues.Where(i=>i.ProjectId == id).Include(i=>i.Developer);
             Project project = db.Projects.Find(id);
             if (project == null)
             {
@@ -46,7 +45,7 @@ namespace BugTracker.Controllers
                 Description = project.Description,
                 Customer = project.Customer,
                 ManagerName = db.Users.Find(project.ManagerId).UserName,
-                Issues = project.Issues.ToList()
+                Issues = issues.ToList()
             };
 
             return View(model);
