@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+
 
 namespace BugTracker.Controllers
 {
@@ -15,7 +17,8 @@ namespace BugTracker.Controllers
         // GET: /Project/
         public ActionResult Index()
         {
-            return View(db.Projects);
+            var projects = db.Projects.Include(p => p.User);
+            return View(projects);
         }
 
         //
@@ -54,8 +57,8 @@ namespace BugTracker.Controllers
                     Title = model.Title,
                     Description = model.Description,
                     Customer = model.Customer,
-                    ManagerId = manager.Id,
-                    Manager = manager
+                    UserId = manager.Id,
+                    User = manager
                 };
                 db.Projects.Add(project);
                 db.SaveChanges();

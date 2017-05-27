@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -39,9 +40,10 @@ namespace BugTracker.Models
 
         public string Customer { get; set; }
 
-        public string ManagerId { get; set; }
-
-        public User Manager { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        
+        public User User { get; set; }
 
         public virtual List<Issue> Issues { get; set; }
 
@@ -87,10 +89,14 @@ namespace BugTracker.Models
             return userIdentity;
         }
 
+
+        public virtual List<Project> Projects { get; set; }
+
         public virtual List<Issue> Issues { get; set; }
 
         public User()
         {
+            Projects = new List<Project>();
             Issues = new List<Issue>();
         }
 
