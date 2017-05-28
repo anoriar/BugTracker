@@ -28,7 +28,7 @@ namespace BugTracker.Controllers
                 return HttpNotFound();
             }
 
-            var enabledStatuses = EnabledStatuses.getEnabledIssueStatuses(issue.Status);
+            var enabledStatuses = IssueStatusesManager.getEnabledIssueStatuses(issue.Status);
             var model = new IssueDetailModel
             {
                 Id = issue.Id,
@@ -68,7 +68,7 @@ namespace BugTracker.Controllers
                 model.ProjectId = issue.ProjectId;
                 model.Status = issue.Status.ToString();
                 model.Developer = db.Users.Find(issue.DeveloperId).UserName;
-                model.EnabledStatuses = EnabledStatuses.getEnabledIssueStatuses(issue.Status);
+                model.EnabledStatuses = IssueStatusesManager.getEnabledIssueStatuses(issue.Status);
 
                 return View(model);
         }
@@ -80,7 +80,7 @@ namespace BugTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var developers = UsersList.getUsersByRole("developer");
+            var developers = RolesManager.getSelectListByRole("developer");
             var model = new IssueCreateModel()
             {
                 ProjectId = (int)id,
@@ -97,7 +97,6 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IssueCreateModel model)
         {
-            
             if (ModelState.IsValid)
             {
                 var project = db.Projects.Find(model.ProjectId);
@@ -120,8 +119,67 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = issue.Id });
             }
-            var developers = UsersList.getUsersByRole("developer");
+            var developers = RolesManager.getSelectListByRole("developer");
             model.Developers = developers;
+
+            return View(model);
+        }
+
+
+        // GET: /Issue/Edit/issueId
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Issue issue = db.Issues.Find(id);
+            if (issue == null)
+            {
+                return HttpNotFound();
+            }
+            var developers = RolesManager.getSelectListByRole("developer");
+            var curDev = db.Users.Find(issue.DeveloperId);
+           
+            var model = new IssueEditModel
+            {
+                Id = issue.Id,
+                Title = issue.Title,
+                Description = issue.Description,
+                Developers = developers,
+                Price = issue.Price,
+                ProjectId = issue.ProjectId
+            };
+
+            return View(model);
+        }
+
+
+        // POST: /Issue/Edit
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(IssueEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Issue issue = db.Issues.Find(model.Id);
+                var developer = db.Users.Find(model.DeveloperId);
+
+                issue.Title = model.Title;
+                issue.Description = model.Description;
+                issue.Price = model.Price;
+                issue.DeveloperId = developer.Id;
+                issue.Developer = developer;
+
+                db.Entry(issue).State= EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = issue.Id });
+            }
+            var developers = RolesManager.getSelectListByRole("developer");
+            model.Developers = developers;
+           
 
             return View(model);
         }

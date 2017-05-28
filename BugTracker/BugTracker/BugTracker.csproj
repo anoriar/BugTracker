@@ -187,11 +187,11 @@
     <Compile Include="Models\AppDbInitializer.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\BugTrackerViewModels.cs" />
-    <Compile Include="Models\EnabledStatuses.cs" />
+    <Compile Include="Models\IssueStatusesManager.cs" />
     <Compile Include="Models\Enums\IssueStatuses.cs" />
     <Compile Include="Models\Enums\UserRoles.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\UsersList.cs" />
+    <Compile Include="Models\RolesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -245,6 +245,7 @@
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Issue\Create.cshtml" />
     <Content Include="Views\Issue\Details.cshtml" />
+    <Content Include="Views\Issue\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

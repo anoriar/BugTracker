@@ -63,6 +63,33 @@ namespace BugTracker.Models
 
     }
 
+    public class IssueEditModel
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public int ProjectId { get; set; }
+
+        [Required]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Required]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "Price")]
+        public decimal Price { get; set; }
+
+        [Required]
+        [Display(Name = "Developer")]
+        public string DeveloperId { get; set; }
+
+        public IEnumerable<SelectListItem> Developers { get; set; }
+
+    }
+
     public class ProjectCreateModel
     {
         [Key]

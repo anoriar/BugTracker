@@ -9,9 +9,9 @@ using System.Web.Mvc;
 
 namespace BugTracker.Models
 {
-    public class UsersList
+    public class RolesManager
     {
-        public static IEnumerable<SelectListItem> getUsersByRole(string roleStr)
+        private static IEnumerable<User> getUsersByRole(string roleStr)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             List<string> usersNames = new List<string>();
@@ -27,7 +27,7 @@ namespace BugTracker.Models
                     usersNames.Add(user.UserName);
                 }
             }
-            return GetSelectListItems(users);
+            return users;
         }
 
         private static IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<User> elements)
@@ -45,6 +45,13 @@ namespace BugTracker.Models
 
             return selectList;
         }
+
+        public static IEnumerable<SelectListItem> getSelectListByRole(string role)
+        {
+            return GetSelectListItems(getUsersByRole(role));
+        }
+
+       
     }
 
 

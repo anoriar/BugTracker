@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace BugTracker.Models
 {
-    public class EnabledStatuses
+    public class IssueStatusesManager
     {
         public static IEnumerable<SelectListItem> getEnabledIssueStatuses(IssueStatuses status)
         {

@@ -55,7 +55,7 @@ namespace BugTracker.Controllers
         // GET: /Project/Create
         public ActionResult Create()
         {
-            var managers = UsersList.getUsersByRole("manager");
+            var managers = RolesManager.getSelectListByRole("manager");
             ProjectCreateModel model = new ProjectCreateModel
             {
                 
@@ -69,7 +69,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public ActionResult Create(ProjectCreateModel model)
         {
-            var managers = UsersList.getUsersByRole("manager");
+            var managers = RolesManager.getSelectListByRole("manager");
             model.Managers = managers;
            
             if (ModelState.IsValid)
