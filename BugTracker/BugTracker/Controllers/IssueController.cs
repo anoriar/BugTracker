@@ -8,12 +8,29 @@ using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
 using BugTracker.Models.Enums;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BugTracker.Controllers
 {
     public class IssueController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        protected UserManager<User> UserManager { get; set; }
+      
+
+        public ActionResult Index()
+        {
+            this.UserManager = new UserManager<User>(new UserStore<User>(this.db));
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var issues = db.Issues.Where(p => p.DeveloperId == user.Id).Include(p => p.Project);
+            return View(issues);
+        }
+
 
         // GET: /Issue/Details/5
         public ActionResult Details(int? id)

@@ -28,6 +28,12 @@
                     }
         
                     <li>@Html.ActionLink("Projects", "Index", "Project")</li>
+
+                    @if (User.IsInRole("developer"))
+                    {
+                        <li>@Html.ActionLink("Your Issues", "Index", "Issue")</li>
+                    }
+
                   
                 </ul>
                 @Html.Partial("_LoginPartial")
