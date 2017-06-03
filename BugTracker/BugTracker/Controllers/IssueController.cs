@@ -67,17 +67,16 @@ namespace BugTracker.Controllers
         public ActionResult ChangeStatus(IssueDetailModel model)
         {
             Issue issue = db.Issues.Find(model.Id);
-           // var userName = issue.Developer.UserName;
-           // if (User.Identity.Name == userName || User.IsInRole("manager") || User.IsInRole("admin"))
-            //{
+            var userName = issue.Developer.UserName;
+            if (User.Identity.Name == userName || User.IsInRole(UserRoles.manager.ToString()) || User.IsInRole("admin"))
+            {
                 if (ModelState.IsValid)
                 {
-
                     issue.Status = (IssueStatuses)Enum.Parse(typeof(IssueStatuses), model.Status);
                     db.Entry(issue).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-           // }
+           }
                 model.Id = issue.Id;
                 model.Title = issue.Title;
                 model.Description = issue.Description;

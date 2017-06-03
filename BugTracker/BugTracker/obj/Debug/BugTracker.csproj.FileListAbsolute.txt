@@ -216,7 +216,6 @@ E:\Web\gitrepo\BugTracker\BugTracker\bin\Microsoft.Owin.Security.MicrosoftAccoun
 E:\Web\gitrepo\BugTracker\BugTracker\obj\Debug\BugTracker.csprojResolveAssemblyReference.cache
 E:\Web\gitrepo\BugTracker\BugTracker\obj\Debug\BugTracker.dll
 E:\Web\gitrepo\BugTracker\BugTracker\obj\Debug\BugTracker.pdb
-E:\Web\BugTracker\BugTracker\BugTracker\obj\Debug\BugTracker.csprojResolveAssemblyReference.cache
 E:\Web\BugTracker\BugTracker\BugTracker\obj\Debug\BugTracker.dll
 E:\Web\BugTracker\BugTracker\BugTracker\obj\Debug\BugTracker.pdb
 E:\Web\BugTracker\BugTracker\BugTracker\bin\BugTracker.dll.config
