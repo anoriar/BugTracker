@@ -67,26 +67,34 @@ namespace BugTracker.Controllers
         public ActionResult ChangeStatus(IssueDetailModel model)
         {
             Issue issue = db.Issues.Find(model.Id);
-            var userName = issue.Developer.UserName;
-            //if (User.Identity.Name == userName || User.IsInRole(UserRoles.manager.ToString()) || User.IsInRole("admin"))
-           // {
+            var userName = db.Users.Find(issue.DeveloperId).UserName;
+
+            if (User.Identity.Name == userName || 
+                User.IsInRole(UserRoles.manager.ToString()) || 
+                User.IsInRole("admin"))
+            {
                 if (ModelState.IsValid)
                 {
                     issue.Status = (IssueStatuses)Enum.Parse(typeof(IssueStatuses), model.Status);
                     db.Entry(issue).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-          // }
-                model.Id = issue.Id;
-                model.Title = issue.Title;
-                model.Description = issue.Description;
-                model.Price = issue.Price;
-                model.ProjectId = issue.ProjectId;
-                model.Status = issue.Status.ToString();
-                model.Developer = db.Users.Find(issue.DeveloperId).UserName;
-                model.EnabledStatuses = IssueStatusesManager.getEnabledIssueStatuses(issue.Status);
+            }
+            else
+            {
+                ModelState.AddModelError("Status", "Вы не обладаете правами доступа");
+            }
 
-                return View(model);
+            model.Id = issue.Id;
+            model.Title = issue.Title;
+            model.Description = issue.Description;
+            model.Price = issue.Price;
+            model.ProjectId = issue.ProjectId;
+            model.Status = issue.Status.ToString();
+            model.Developer = userName;
+            model.EnabledStatuses = IssueStatusesManager.getEnabledIssueStatuses(issue.Status);
+
+            return View(model);
         }
 
         // GET: /Issue/Create/projectid

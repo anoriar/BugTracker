@@ -46,24 +46,27 @@
 
 <h2>Задачи</h2>
 
-@using (Html.BeginForm("Create", "Issue", new { id = Model.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
+@if (User.Identity.Name == Model.ManagerName || User.IsInRole("admin")) { 
+
+    using (Html.BeginForm("Create", "Issue", new { id = Model.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать задачу" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Создать задачу" class="btn btn-default" />
+                </div>
             </div>
+
         </div>
-
-    </div>
+    }
 }
-
 
 <table class="table">
     <tr>
@@ -106,9 +109,15 @@
             <td>
                 @Html.ActionLink("Подробно", "Details/" + item.Id, "Issue")
             </td>
-            <td>
-                @Html.ActionLink("Редактировать", "Edit/" + item.Id, "Issue")
-            </td>
+
+            @if (User.Identity.Name == Model.ManagerName ||
+                User.Identity.Name == item.Developer.UserName ||
+                User.IsInRole("admin"))
+            {
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit/" + item.Id, "Issue")
+                </td>
+            }
         </tr>
     }
 </table>

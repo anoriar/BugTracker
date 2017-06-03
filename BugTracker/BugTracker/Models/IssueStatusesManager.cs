@@ -57,7 +57,6 @@ namespace BugTracker.Models
                     Text = element.ToString()
                 });
             }
-
             return selectList;
         }
 

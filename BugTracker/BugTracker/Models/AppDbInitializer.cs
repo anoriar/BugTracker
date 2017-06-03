@@ -40,7 +40,6 @@ namespace BugTracker.Models
                 userManager.AddToRole(admin.Id, adminRole.Name);
                
             }
-
             base.Seed(context);
         }
     }
