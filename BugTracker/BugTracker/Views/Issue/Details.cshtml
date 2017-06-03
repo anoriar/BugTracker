@@ -1,13 +1,12 @@
 ﻿@model BugTracker.Models.IssueDetailModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Подробно о задаче";
 }
 
-<h2>Details</h2>
+<h2>Подробно о задаче</h2>
 
 <div>
-    <h4>IssueDetailModel</h4>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
@@ -77,7 +76,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4> Change Issue Status</h4>
+        <h4> Изменить статус задачи</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -91,7 +90,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="EditStatus" class="btn btn-default" />
+                <input type="submit" value="Изменить статус" class="btn btn-default" />
             </div>
         </div>
 

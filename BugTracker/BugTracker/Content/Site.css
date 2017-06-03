@@ -1,20 +1,39 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: 10%;
+    padding-bottom: 10%;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
+ h2 {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+} 
+
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+ }
+
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
+input{
+    width: 20%;
+}
+
+select{
+    min-width: 30%;
+    max-width: 50%;
+}
+
 textarea {
-    max-width: 280px;
-    min-width: 50px;
+   width: 50%
+}
+
+input[type=submit]{
+    min-width: 10%;
+    max-width: 15%;
 }
 
 /* styles for validation helpers */

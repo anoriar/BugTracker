@@ -2,17 +2,16 @@
 @model BugTracker.Models.IssueEditModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактировать задачу";
 }
 
-<h2>Edit Issue</h2>
+<h2>Редактировать задачу</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>IssueCreateModel</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -52,21 +51,18 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DeveloperId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DeveloperId, Model.Developers, "Please, select a developer", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.DeveloperId, Model.Developers, "Выберите разработчика", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DeveloperId)
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Edit" class="btn btn-default" />
+                <input type="submit" value="Редактировать" class="btn btn-default" />
             </div>
         </div>
 
-
-
     </div>
-
 
 }
 

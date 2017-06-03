@@ -15,19 +15,19 @@ namespace BugTracker.Models
         public int ProjectId { get; set; }
 
         [Required]
-        [Display(Name = "Title")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
 
         [Required]
-        [Display(Name = "Description")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Price")]
+        [Display(Name = "Стоимость")]
         public decimal Price { get; set; }
 
         [Required]
-        [Display(Name = "Developer")]
+        [Display(Name = "Разработчик")]
         public string DeveloperId { get; set; }
 
         public IEnumerable<SelectListItem> Developers { get; set; } 
@@ -39,22 +39,22 @@ namespace BugTracker.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Title")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
 
 
-        [Display(Name = "Description")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
 
-        [Display(Name = "Developer")]
+        [Display(Name = "Разработчик")]
         public string Developer { get; set; }
 
-        [Display(Name = "Status")]
+        [Display(Name = "Статус")]
         public string Status { get; set; }
 
 
-        [Display(Name = "Price")]
+        [Display(Name = "Стоимость")]
         public decimal Price { get; set; }
 
         public int ProjectId { get; set; }
@@ -71,19 +71,19 @@ namespace BugTracker.Models
         public int ProjectId { get; set; }
 
         [Required]
-        [Display(Name = "Title")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
 
         [Required]
-        [Display(Name = "Description")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Price")]
+        [Display(Name = "Стоимость")]
         public decimal Price { get; set; }
 
         [Required]
-        [Display(Name = "Developer")]
+        [Display(Name = "Разработчик")]
         public string DeveloperId { get; set; }
 
         public IEnumerable<SelectListItem> Developers { get; set; }
@@ -96,19 +96,19 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Title")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
 
         [Required]
-        [Display(Name = "Description")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Customer")]
+        [Display(Name = "Заказчик")]
         public string Customer { get; set; }
 
         [Required]
-        [Display(Name = "Manager")]
+        [Display(Name = "Менеджер")]
         public string ManagerId { get; set; }
 
         public IEnumerable<SelectListItem> Managers { get; set; } 
@@ -119,19 +119,19 @@ namespace BugTracker.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Title")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        [Display(Name = "Customer")]
+        [Display(Name = "Заказчик")]
         public string Customer { get; set; }
 
-        [Display(Name = "ManagerName")]
+        [Display(Name = "Менеджер")]
         public string ManagerName { get; set; }
 
-        [Display(Name = "Issues")]
+        [Display(Name = "Задачи")]
         public List<Issue> Issues { get; set; }
     }
 }

@@ -1,13 +1,12 @@
 ﻿@model BugTracker.Models.ProjectDetailModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Подробно о проекте";
 }
 
-<h2>Details</h2>
+<h2>Подробно о проекте</h2>
 
 <div>
-    <h4>ProjectDetailModel</h4>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
@@ -45,21 +44,20 @@
     </dl>
 </div>
 
-<h2>Issues</h2>
+<h2>Задачи</h2>
 
 @using (Html.BeginForm("Create", "Issue", new { id = Model.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4> Create new Issue</h4>
         <hr />
         @Html.ValidationSummary(true)
 
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="CreateIssue" class="btn btn-default" />
+                <input type="submit" value="Создать задачу" class="btn btn-default" />
             </div>
         </div>
 
@@ -73,16 +71,16 @@
             @Html.DisplayName("Id")
         </th>
         <th>
-            @Html.DisplayName("Title")
+            @Html.DisplayName("Название")
         </th>
         <th>
-            @Html.DisplayName("Status")
+            @Html.DisplayName("Статус")
         </th>
         <th>
-            @Html.DisplayName("Price")
+            @Html.DisplayName("Стоимость")
         </th>
         <th>
-            @Html.DisplayName("User")
+            @Html.DisplayName("Разработчик")
         </th>
         <th></th>
     </tr>
@@ -106,14 +104,14 @@
                 @Html.DisplayFor(modelItem => item.Developer.UserName)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details/" + item.Id, "Issue")
+                @Html.ActionLink("Подробно", "Details/" + item.Id, "Issue")
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit/" + item.Id, "Issue")
+                @Html.ActionLink("Редактировать", "Edit/" + item.Id, "Issue")
             </td>
         </tr>
     }
 </table>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("К списку проектов", "Index")
 </p>

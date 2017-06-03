@@ -1,18 +1,15 @@
 ﻿@model IEnumerable<BugTracker.Models.Issue>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Задачи";
 }
 
-<h2>Your Issues</h2>
+<h2>Ваши задачи</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Project Title")
+            @Html.DisplayName("Название проекта")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -41,8 +38,8 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Подробно", "Details", new { id=item.Id }) 
 
         </td>
     </tr>

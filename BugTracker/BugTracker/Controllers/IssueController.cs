@@ -68,15 +68,15 @@ namespace BugTracker.Controllers
         {
             Issue issue = db.Issues.Find(model.Id);
             var userName = issue.Developer.UserName;
-            if (User.Identity.Name == userName || User.IsInRole(UserRoles.manager.ToString()) || User.IsInRole("admin"))
-            {
+            //if (User.Identity.Name == userName || User.IsInRole(UserRoles.manager.ToString()) || User.IsInRole("admin"))
+           // {
                 if (ModelState.IsValid)
                 {
                     issue.Status = (IssueStatuses)Enum.Parse(typeof(IssueStatuses), model.Status);
                     db.Entry(issue).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-           }
+          // }
                 model.Id = issue.Id;
                 model.Title = issue.Title;
                 model.Description = issue.Description;
